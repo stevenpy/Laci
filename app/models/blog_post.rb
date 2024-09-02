@@ -7,7 +7,7 @@ class BlogPost < ApplicationRecord
   scope :draft, -> { where(published_at: nil) }
   scope :published, -> { where("published_at <= ?", Time.current) }
   scope :scheduled, -> { where("published_at >= ?", Time.current) }
-  scope :sorted, -> { order(arel_table[:published_at].desc.nulls_last).order(updated_at: :desc) }
+  scope :sorted, -> { order(arel_table[:published_at].desc.nulls_first).order(updated_at: :desc) }
 
   def draft?
     published_at.nil?
